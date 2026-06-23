@@ -12,51 +12,55 @@
       <span class="brand-mark"></span>
       Nocturne Seed Bank
     </a>
-    <nav aria-label="Primary navigation">
-      <a href="index.html#collection">Collection</a>
-      <a href="index.html#field-notes">Field Notes</a>
-      <a href="index.html#visit">Visit</a>
-      <a href="about.html">About</a>
-      <a href="gallery.html">Gallery</a>
-      <a href="journal.html">Journal</a>
-      <a href="rituals.html">Rituals</a>
-      <a href="keepers.html">Keepers</a>
+    <nav aria-label=\"Primary navigation\">
+      <a href=\"index.html#collection\">Collection</a>
+      <a href=\"gallery.html\">Shop</a>
+      <a href=\"cart.html\">Cart</a>
     </nav>
   </header>
 
-  <main class="gallery-page">
-    <section class="gallery-panel">
-      <p class="eyebrow">Specimen gallery</p>
-      <h1>Browse every seed in the archive.</h1>
-      <p class="lede">A visual catalog of the nocturnal specimens you can explore. Click a tray to learn more about its glow, scent, and soil.</p>
-      <div class="gallery-grid">
-        <article class="gallery-card gallery-card--mint">
-          <h2>Glassroot</h2>
-          <p>Transparent stems storing thunderwater in tiny green chambers.</p>
-        </article>
-        <article class="gallery-card gallery-card--coral">
-          <h2>Embercap Moss</h2>
-          <p>Glows briefly when touched, then cools into a rust-colored velvet mat.</p>
-        </article>
-        <article class="gallery-card gallery-card--blue">
-          <h2>Clockvine</h2>
-          <p>Blooms in twelve small pulses, one for each hour before sunrise.</p>
-        </article>
-        <article class="gallery-card gallery-card--gold">
-          <h2>Whispergrain</h2>
-          <p>Records footsteps as pale rings and releases soft clicks at dawn.</p>
-        </article>
-        <article class="gallery-card gallery-card--rose">
-          <h2>Aurora Bean</h2>
-          <p>Paints small ribbons of color across nearby walls after midnight.</p>
-        </article>
-        <article class="gallery-card gallery-card--blue-dark">
-          <h2>Blue Hour Lily</h2>
-          <p>Opens for exactly seven minutes while the sky forgets its color.</p>
-        </article>
-      </div>
-      <a class="button primary" href="index.html">Back to the archive</a>
+  <main class="shop-page">
+    <section class="shop-panel">
+      <p class="eyebrow">Specimen shop</p>
+      <h1>Purchase seeds from the archive.</h1>
+      <p class="lede">Each tray contains a specimen ready to bloom in your nocturnal garden. Select a seed and add it to your order.</p>
+      <div id="products-grid" class="products-grid"></div>
+      <a class="button primary" href="cart.html">View cart</a>
+      <a class="button ghost" href="index.html">Back to the archive</a>
     </section>
   </main>
+
+  <script src="cart.js"></script>
+  <script>
+    function renderProducts() {
+      const grid = document.getElementById('products-grid');
+      grid.innerHTML = PRODUCTS.map(product => `
+        <article class="product-card product-card--${product.id % 3}">
+          <h2>${product.name}</h2>
+          <p>${product.description}</p>
+          <dl>
+            <div>
+              <dt>Glow</dt>
+              <dd>${product.glow}</dd>
+            </div>
+            <div>
+              <dt>Scent</dt>
+              <dd>${product.scent}</dd>
+            </div>
+            <div>
+              <dt>Soil</dt>
+              <dd>${product.soil}</dd>
+            </div>
+          </dl>
+          <div class="product-footer">
+            <span class="product-price">$${product.price.toFixed(2)}</span>
+            <button class="button primary" onclick="addToCart(${product.id}); alert('Added to cart!');">Add to cart</button>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    renderProducts();
+  </script>
 </body>
 </html>

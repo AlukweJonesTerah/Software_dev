@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Cart | Nocturne Seed Bank</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Nocturne Seed Bank home">
+      <span class="brand-mark"></span>
+      Nocturne Seed Bank
+    </a>
+    <nav aria-label="Primary navigation">
+      <a href="index.html#collection">Collection</a>
+      <a href="gallery.html">Shop</a>
+      <a href="cart.html">Cart</a>
+    </nav>
+  </header>
+
+  <main class="cart-page">
+    <section class="cart-panel">
+      <p class="eyebrow">Shopping cart</p>
+      <h1>Your order.</h1>
+      <div id="cart-content" class="cart-content"></div>
+      <div id="cart-empty" class="cart-empty" hidden>
+        <p>Your cart is empty. <a href="gallery.html">Browse the shop</a></p>
+      </div>
+    </section>
+  </main>
+
+  <script src="cart.js"></script>
+  <script>
+    function renderCart() {
+      const cart = getCart();
+      const content = document.getElementById('cart-content');
+      const empty = document.getElementById('cart-empty');
+
+      if (cart.length === 0) {
+        content.hidden = true;
+        empty.hidden = false;
+        return;
+      }
+
+      content.hidden = false;
+      empty.hidden = true;
+
+      const total = getCartTotal();
+      content.innerHTML = `
+        <div class="cart-items">
+          ${cart.map(item => `
+            <div class="cart-item">
+              <div class="cart-item-info">
+                <h2>${item.name}</h2>
+                <p>$${item.price.toFixed(2)} each</p>
+              </div>
+              <div class="cart-item-controls">
+                <label for="qty-${item.id}">Quantity:</label>
+                <input type="number" id="qty-${item.id}" value="${item.quantity}" min="1" onchange="updateCartQuantity(${item.id}, parseInt(this.value)); renderCart();">
+                <button class="button ghost" onclick="removeFromCart(${item.id}); renderCart();">Remove</button>
+              </div>
+              <div class="cart-item-total">
+                $${(item.price * item.quantity).toFixed(2)}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+        <div class="cart-summary">
+          <div class="summary-row">
+            <span>Subtotal:</span>
+            <span>$${total.toFixed(2)}</span>
+          </div>
+          <div class="summary-row">
+            <span>Shipping:</span>
+            <span>$5.99</span>
+          </div>
+          <div class="summary-row summary-total">
+            <span>Total:</span>
+            <span>$${(total + 5.99).toFixed(2)}</span>
+          </div>
+        </div>
+        <div class="cart-actions">
+          <a class="button primary" href="checkout.html">Proceed to checkout</a>
+          <a class="button ghost" href="gallery.html">Continue shopping</a>
+        </div>
+      `;
+    }
+
+    renderCart();
+  </script>
+</body>
+</html>

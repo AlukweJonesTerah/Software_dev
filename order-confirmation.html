@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Confirmed | Nocturne Seed Bank</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Nocturne Seed Bank home">
+      <span class="brand-mark"></span>
+      Nocturne Seed Bank
+    </a>
+    <nav aria-label="Primary navigation">
+      <a href="index.html#collection">Collection</a>
+      <a href="gallery.html">Shop</a>
+      <a href="cart.html">Cart</a>
+    </nav>
+  </header>
+
+  <main class="confirmation-page">
+    <section class="confirmation-panel">
+      <p class="eyebrow">Order confirmed</p>
+      <h1>Your order has been placed!</h1>
+      <div id="confirmation-content" class="confirmation-content"></div>
+      <div class="confirmation-actions">
+        <a class="button primary" href="gallery.html">Continue shopping</a>
+        <a class="button ghost" href="index.html">Back to archive</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="cart.js"></script>
+  <script>
+    function displayOrderConfirmation() {
+      const orderData = JSON.parse(localStorage.getItem('last_order') || '{}');
+      const content = document.getElementById('confirmation-content');
+
+      if (!orderData.orderId) {
+        content.innerHTML = '<p>No recent order found.</p>';
+        return;
+      }
+
+      content.innerHTML = `
+        <div class="order-details">
+          <div class="detail-section">
+            <h2>Order Number</h2>
+            <p><strong>${orderData.orderId}</strong></p>
+          </div>
+          
+          <div class="detail-section">
+            <h2>Order Date</h2>
+            <p>${orderData.date}</p>
+          </div>
+
+          <div class="detail-section">
+            <h2>Shipping To</h2>
+            <p>
+              ${orderData.name}<br>
+              ${orderData.address}<br>
+              ${orderData.city}, ${orderData.zip}
+            </p>
+          </div>
+
+          <div class="detail-section">
+            <h2>Items Ordered</h2>
+            <ul class="order-items">
+              ${orderData.items.map(item => `
+                <li>
+                  ${item.quantity}x ${item.name} @ $${item.price.toFixed(2)} each
+                  <span class="item-total">$${(item.quantity * item.price).toFixed(2)}</span>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+
+          <div class="detail-section order-total-section">
+            <h2>Order Total</h2>
+            <p class="order-total-amount"><strong>$${orderData.total.toFixed(2)}</strong></p>
+          </div>
+
+          <div class="detail-section">
+            <p class="confirmation-note">A confirmation email has been sent to <strong>${orderData.email}</strong>. Your seeds will arrive within 7-10 business days.</p>
+          </div>
+        </div>
+      `;
+    }
+
+    displayOrderConfirmation();
+  </script>
+</body>
+</html>

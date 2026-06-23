@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout | Nocturne Seed Bank</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Nocturne Seed Bank home">
+      <span class="brand-mark"></span>
+      Nocturne Seed Bank
+    </a>
+    <nav aria-label="Primary navigation">
+      <a href="index.html#collection">Collection</a>
+      <a href="gallery.html">Shop</a>
+      <a href="cart.html">Cart</a>
+    </nav>
+  </header>
+
+  <main class="checkout-page">
+    <section class="checkout-panel">
+      <p class="eyebrow">Order checkout</p>
+      <h1>Complete your order.</h1>
+      <form id="checkout-form" class="checkout-form">
+        <fieldset>
+          <legend>Shipping Information</legend>
+          <label for="name">Full Name</label>
+          <input id="name" type="text" placeholder="Your name" required>
+          
+          <label for="email">Email</label>
+          <input id="email" type="email" placeholder="you@example.com" required>
+          
+          <label for="address">Address</label>
+          <input id="address" type="text" placeholder="Street address" required>
+          
+          <label for="city">City</label>
+          <input id="city" type="text" placeholder="City" required>
+          
+          <label for="zip">ZIP Code</label>
+          <input id="zip" type="text" placeholder="ZIP code" required>
+        </fieldset>
+
+        <fieldset>
+          <legend>Payment Method</legend>
+          <label>
+            <input type="radio" name="payment" value="card" checked required>
+            Credit Card (demo)
+          </label>
+          <label>
+            <input type="radio" name="payment" value="other" required>
+            Other Method (demo)
+          </label>
+          <p class="note">This is a demo. No actual payment is processed.</p>
+        </fieldset>
+
+        <div class="order-total">
+          <p id="order-summary"></p>
+        </div>
+
+        <button class="button primary" type="submit">Complete order</button>
+        <a class="button ghost" href="cart.html">Back to cart</a>
+      </form>
+    </section>
+  </main>
+
+  <script src="cart.js"></script>
+  <script>
+    function updateOrderSummary() {
+      const total = getCartTotal();
+      const summary = document.getElementById('order-summary');
+      summary.innerHTML = `<strong>Order Total: $${(total + 5.99).toFixed(2)}</strong>`;
+    }
+
+    document.getElementById('checkout-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const cartCount = getCartCount();
+      if (cartCount === 0) {
+        alert('Your cart is empty!');
+        return;
+      }
+      
+      // Save order info to localStorage
+      const orderData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        address: document.getElementById('address').value,
+        city: document.getElementById('city').value,
+        zip: document.getElementById('zip').value,
+        items: getCart(),
+        total: getCartTotal() + 5.99,
+        date: new Date().toLocaleDateString(),
+        orderId: 'ORD-' + Date.now()
+      };
+      
+      localStorage.setItem('last_order', JSON.stringify(orderData));
+      clearCart();
+      window.location.href = 'order-confirmation.html';
+    });
+
+    updateOrderSummary();
+  </script>
+</body>
+</html>
