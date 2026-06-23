@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nocturne Seed Bank</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <canvas id="seed-canvas" aria-hidden="true"></canvas>
+
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="Nocturne Seed Bank home">
+      <span class="brand-mark"></span>
+      Nocturne Seed Bank
+    </a>
+    <nav aria-label="Primary navigation">
+      <a href="#collection">Collection</a>
+      <a href="#field-notes">Field Notes</a>
+      <a href="#visit">Visit</a>
+      <a href="about.html">About</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="journal.html">Journal</a>
+      <a href="rituals.html">Rituals</a>
+      <a href="keepers.html">Keepers</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">Open after sunset</p>
+        <h1 id="hero-title">Seeds for gardens that only wake in moonlight.</h1>
+        <p class="lede">
+          Browse a quiet archive of fictional night-blooming plants, cataloged by glow,
+          scent, and the strange weather they prefer.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="#collection">View specimens</a>
+          <button class="button ghost" id="shuffle-button" type="button">New bloom</button>
+        </div>
+      </div>
+
+      <aside class="specimen-panel" aria-label="Featured specimen">
+        <p class="panel-label">Featured seed</p>
+        <h2 id="featured-name">Lumen Fern</h2>
+        <p id="featured-description">
+          A fern with silver ribs that unfurl during warm rain and fold at the sound of bells.
+        </p>
+        <dl>
+          <div>
+            <dt>Glow</dt>
+            <dd id="featured-glow">Soft jade</dd>
+          </div>
+          <div>
+            <dt>Scent</dt>
+            <dd id="featured-scent">Pepper leaf</dd>
+          </div>
+          <div>
+            <dt>Soil</dt>
+            <dd id="featured-soil">Basalt dust</dd>
+          </div>
+        </dl>
+      </aside>
+    </section>
+
+    <section class="collection" id="collection" aria-labelledby="collection-title">
+      <div class="section-heading">
+        <p class="eyebrow">Living index</p>
+        <h2 id="collection-title">Tonight's trays</h2>
+      </div>
+      <div class="collection-tools">
+        <label for="search-input">Search the archive</label>
+        <input id="search-input" class="search-input" type="search" placeholder="Filter by name, glow, or scent">
+        <p class="no-results" id="no-results" hidden>No matching specimens found.</p>
+      </div>
+      <div class="seed-grid" id="seed-grid"></div>
+    </section>
+
+    <section class="notes" id="field-notes" aria-labelledby="notes-title">
+      <div class="section-heading">
+        <p class="eyebrow">Field notes</p>
+        <h2 id="notes-title">Archive rules</h2>
+      </div>
+      <div class="notes-content">
+        <ol id="notes-list">
+          <li>Label every seed by the weather it remembers best.</li>
+          <li>Never store singing pods beside echoing glass.</li>
+          <li>Return borrowed moon soil before dawn.</li>
+        </ol>
+        <form id="notes-form" class="notes-form">
+          <label for="note-input">Add your own rule</label>
+          <div class="notes-form-row">
+            <input id="note-input" type="text" placeholder="A new archive rule..." required>
+            <button class="button primary" type="submit">Save note</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="visit" id="visit" aria-labelledby="visit-title">
+      <div>
+        <p class="eyebrow">Visiting window</p>
+        <h2 id="visit-title">The archive opens from 9:12 PM to first birdcall.</h2>
+      </div>
+      <a class="button primary" href="visit_page.html">Request a tray</a>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
